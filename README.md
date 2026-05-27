@@ -65,10 +65,6 @@ Integration with external scraper repository:
 - This application is integrated with the Google Maps Scraper repository located at: https://github.com/DheyohDev/google-maps-scraper.git
 - The Laravel backend acts as a proxy to the scraper service running from that repository (configured via `SCRAPING_SERVICE_API_URL`). Ensure the scraper service is running and reachable by the URL set in `.env`.
 
-References:
-- Technical documentation: Documentation/Technical-Documentation.md
-- External scraper API spec: Documentation/google-map-scraper-API-1.0.0/
-
 If you want, I can also:
 - Add an example `.env.example` snippet for all required environment variables.
 - Add a short troubleshooting section for common integration problems with the external scraper service.

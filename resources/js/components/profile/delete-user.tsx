@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
+import PasswordInput from '@/components/profile/password-input';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,

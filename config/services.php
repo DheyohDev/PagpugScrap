@@ -27,6 +27,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'scraping' => [
+    'base_url' => env('SCRAPING_SERVICE_API_URL'),
+    ],
 
     'slack' => [
         'notifications' => [

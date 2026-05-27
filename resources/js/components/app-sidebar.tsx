@@ -1,9 +1,11 @@
+import React from 'react';
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
-import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+import { BookOpen, FolderGit2, Globe, LayoutGrid, User } from 'lucide-react';
+import AppLogo from './branding/app-logo';
+import { NavFooter } from './navigation/nav-footer';
+import { NavMain } from './navigation/nav-main';
+import { NavUser } from './navigation/nav-user';
+
 import {
     Sidebar,
     SidebarContent,
@@ -12,15 +14,25 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
+    SidebarRail,
+} from './ui/sidebar';
+import { dashboard } from '../routes';
+import type { NavItem } from '../types';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {   title: 'Scraping Jobs',
+        href: '/scraping',
+        icon: Globe
+    },
+    {
+        title: 'Profile',
+        href: '/settings/profile',
+        icon: User,
     },
 ];
 
@@ -52,14 +64,16 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-            <SidebarContent>
+            <SidebarContent className="px-1">
                 <NavMain items={mainNavItems} />
             </SidebarContent>
 
-            <SidebarFooter>
+            <SidebarFooter className="border-t border-sidebar-border/60 pt-3">
                 <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
+
+            <SidebarRail />
         </Sidebar>
     );
 }

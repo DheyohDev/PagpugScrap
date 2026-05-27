@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class StoreJobRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true; // Set true jika tidak ada sistem Auth (sementara)
+    }
+
+    public function rules(): array
+    {
+        // Validasi disesuaikan dengan ApiScrapeRequest di YAML
+        return [
+            'name'      => 'required|string|max:255',
+            'keywords'  => 'nullable|array',
+            'keywords.*'=> 'string',
+            'lang'      => 'nullable|string|max:10',
+            'zoom'      => 'nullable|integer',
+            'lat'       => 'nullable|string',
+            'lon'       => 'nullable|string',
+            'fast_mode' => 'nullable|boolean',
+            'radius'    => 'nullable|integer',
+            'depth'     => 'nullable|integer',
+            'email'     => 'nullable|boolean',
+            'max_time'  => 'nullable|integer',
+            'proxies'   => 'nullable|array',
+            'proxies.*' => 'string',
+        ];
+    }
+
+    /**
+     * Kustomisasi response jika validasi gagal,
+     * agar sesuai dengan skema "ApiError" (422) di YAML
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'code' => 422,
+            'message' => 'Validation error: ' . $validator->errors()->first()
+        ], 422));
+    }
+}

@@ -54,7 +54,6 @@ Important paths (summary):
 - `app/Models/` — Eloquent models
 - `resources/js/` — frontend (pages, components, layouts)
 - `routes/web.php`, `routes/api.php` — routing
-- `Documentation/` — external API spec and architecture notes
 
 Notes:
 - The frontend never calls the scraping service directly; all requests are proxied through Laravel for security and CORS reasons.

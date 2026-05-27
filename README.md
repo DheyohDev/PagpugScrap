@@ -1,5 +1,13 @@
-# pagpug-app
+# PAGPUG-App
 
+
+<p align="center">
+  <img src="public/demo/pagpugJobs.png" alt="Demo Aplikasi" width="700">
+</p>
+
+<p align="center">
+ <img src="public/demo/pagpugScraping.png" alt="Demo Aplikasi" width="700">
+</p>
 pagpug-app is an internal application built with Laravel (backend) and React/Inertia (frontend). It serves as a dashboard and an API proxy for a separate "Google Maps Scraping Service" running on a Debian server.
 
 Summary:
@@ -40,6 +48,18 @@ SCRAPING_SERVICE_API_URL="http://server.local"
 php artisan migrate
 npm run dev
 php artisan serve
+```
+
+4. Run Laravel queue workers to process background jobs (such as CSV import tasks):
+
+```bash
+php artisan queue:work --tries=3
+```
+
+Or, if you want the queue worker to restart automatically on failure and continue running:
+
+```bash
+php artisan queue:work --daemon --tries=3
 ```
 
 Testing & linting:

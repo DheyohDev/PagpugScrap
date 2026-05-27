@@ -31,7 +31,7 @@ php artisan key:generate
 2. Configure the scraping service URL in `.env`:
 
 ```env
-SCRAPING_SERVICE_API_URL="http://server.local:8001"
+SCRAPING_SERVICE_API_URL="http://server.local"
 ```
 
 3. Run migrations (configure DB in `.env`) and start development servers:

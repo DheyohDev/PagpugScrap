@@ -34,6 +34,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/leads/no-website', [GoogleMapLeadController::class, 'noWebsiteLeads']);
     Route::get('/leads/aggregations', [GoogleMapLeadController::class, 'aggregations']);
     Route::get('/leads/filters', [GoogleMapLeadController::class, 'filters']);
+    Route::post('/leads/{id}/whatsapp/generate', [GoogleMapLeadController::class, 'generateWhatsappMessage']);
     Route::get('/leads/{id}', [GoogleMapLeadController::class, 'show']);
 
 });

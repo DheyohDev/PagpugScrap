@@ -174,7 +174,14 @@ Check sibling files, related controllers, models, or tests for established patte
 - View Composers for shared view data
 - `@aware` for deeply nested component props
 
-### 19. Conventions & Style → `rules/style.md`
+### 19. No Destructive Database Commands → `rules/no-destructive-commands.md`
+
+- Never run `migrate:fresh`, `db:wipe`, `migrate:reset`, `migrate:refresh` without explicit user approval
+- Never execute `DROP TABLE`, `TRUNCATE`, or mass `DELETE`
+- `copilot_dev` database role must not have DELETE, TRUNCATE, or DROP permissions
+- Use reversible migrations instead of destructive operations
+
+### 20. Conventions & Style → `rules/style.md`
 
 - Follow Laravel naming conventions for all entities
 - Prefer Laravel helpers (`Str`, `Arr`, `Number`, `Uri`, `Str::of()`, `$request->string()`) over raw PHP functions

@@ -8,6 +8,8 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Textarea } from '@/components/ui/textarea';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import type { Lead } from '@/components/leads/types';
 import {
     Building2,
@@ -373,6 +375,47 @@ export default function DataLeadDetail({ lead }: { lead: Lead }) {
     const hasWebsite = !!lead.website;
     const hasPhone = !!lead.phone;
 
+    const [whatsappMessage, setWhatsappMessage] = useState('');
+    const [whatsappUrl, setWhatsappUrl] = useState('');
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [whatsappError, setWhatsappError] = useState<string | null>(null);
+
+    const canGenerateWhatsapp = hasPhone;
+
+    const handleGenerateWhatsapp = async () => {
+        if (!canGenerateWhatsapp) {
+            setWhatsappError('Nomor telepon tidak tersedia untuk WhatsApp.');
+            return;
+        }
+
+        setIsGenerating(true);
+        setWhatsappError(null);
+
+        try {
+            const response = await fetch(`/api/v1/leads/${lead.id}/whatsapp/generate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || result.success === false) {
+                throw new Error(result.message ?? 'Gagal membuat pesan WhatsApp.');
+            }
+
+            setWhatsappMessage(result.data.message ?? '');
+            setWhatsappUrl(result.data.whatsapp_url ?? '');
+        } catch (error: any) {
+            setWhatsappError(error.message ?? 'Terjadi kesalahan saat generate WhatsApp.');
+            setWhatsappMessage('');
+            setWhatsappUrl('');
+        } finally {
+            setIsGenerating(false);
+        }
+    };
+
     return (
         <div className="mx-auto w-full max-w-6xl space-y-6 pb-8">
             {/* ══════ Premium Hero Header ══════ */}
@@ -475,6 +518,62 @@ export default function DataLeadDetail({ lead }: { lead: Lead }) {
                             </Button>
                         )}
                     </div>
+                </CardContent>
+            </Card>
+
+            <Card className="border-border/60 shadow-sm">
+                <CardHeader className="pb-4 border-b border-border/50">
+                    <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 text-emerald-600">
+                            <Phone className="h-5 w-5" />
+                        </div>
+                        <div>
+                            <CardTitle className="text-base">WhatsApp Penawaran</CardTitle>
+                            <CardDescription>Generate pesan penawaran yang siap dikirim via WhatsApp.</CardDescription>
+                        </div>
+                    </div>
+                </CardHeader>
+                <CardContent className="space-y-4 pt-4">
+                    {whatsappError && (
+                        <Alert variant="destructive">
+                            <AlertTitle>Validasi WhatsApp gagal</AlertTitle>
+                            <AlertDescription>{whatsappError}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="space-y-1">
+                            <p className="text-sm text-muted-foreground">
+                                {hasPhone
+                                    ? 'Gunakan nomor +62 atau 08 untuk mengirim WhatsApp. Nomor 021 tidak didukung.'
+                                    : 'Nomor telepon tidak tersedia untuk WhatsApp.'}
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                onClick={handleGenerateWhatsapp}
+                                disabled={!canGenerateWhatsapp || isGenerating}
+                            >
+                                {isGenerating ? 'Mengenerate...' : 'Generate Pesan'}
+                            </Button>
+                            {whatsappUrl && (
+                                <Button variant="default" size="sm" asChild>
+                                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                                        Buka WhatsApp
+                                    </a>
+                                </Button>
+                            )}
+                        </div>
+                    </div>
+
+                    {whatsappMessage ? (
+                        <div className="space-y-2">
+                            <p className="text-sm font-medium text-foreground">Preview Pesan WhatsApp</p>
+                            <Textarea readOnly value={whatsappMessage} className="min-h-[160px] resize-none" />
+                        </div>
+                    ) : null}
                 </CardContent>
             </Card>
 

@@ -64,6 +64,23 @@ class GoogleMapLeadController extends Controller
         ]);
     }
 
+    public function generateWhatsappMessage(string $id): JsonResponse
+    {
+        try {
+            $result = $this->service->generateWhatsappMessage($id);
+
+            return response()->json([
+                'success' => true,
+                'data'    => $result,
+            ]);
+        } catch (\InvalidArgumentException $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage(),
+            ], 422);
+        }
+    }
+
     public function noWebsiteLeads(Request $request): JsonResponse
     {
         $validated = $request->validate([

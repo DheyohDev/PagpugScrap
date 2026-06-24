@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        // Cegah perintah destruktif di staging/production
+        if ($this->app->environment('production', 'staging')) {
+        DB::prohibitDestructiveCommands(true);
+    }
     }
 
     /**

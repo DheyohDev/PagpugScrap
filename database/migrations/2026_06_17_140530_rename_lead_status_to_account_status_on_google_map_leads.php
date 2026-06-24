@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('google_map_leads', function (Blueprint $table) {
-            $table->renameColumn('lead_status', 'account_status');
-        });
+        if (Schema::hasColumn('google_map_leads', 'lead_status')) {
+            Schema::table('google_map_leads', function (Blueprint $table) {
+                $table->renameColumn('lead_status', 'account_status');
+            });
+        }
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('google_map_leads', function (Blueprint $table) {
-            $table->renameColumn('account_status', 'lead_status');
-        });
+        if (Schema::hasColumn('google_map_leads', 'account_status')) {
+            Schema::table('google_map_leads', function (Blueprint $table) {
+                $table->renameColumn('account_status', 'lead_status');
+            });
+        }
     }
 };

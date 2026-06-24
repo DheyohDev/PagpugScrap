@@ -1,0 +1,9 @@
+vendor
+node_modules
+.git
+.github
+storage/*.key
+public/storage
+env.php
+.env.local
+.env.*.backup

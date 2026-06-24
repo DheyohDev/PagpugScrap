@@ -1,5 +1,7 @@
 <?php
 
+use App\Quotation\Controllers\ProductController;
+use App\Quotation\Controllers\QuotationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -17,8 +19,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('data-leads-detail', ['id' => $id]);
     })->name('data-leads.detail');
 
+    Route::prefix('quotation')->group(function () {
+        Route::resource('products', ProductController::class);
+        Route::resource('quotations', QuotationController::class);
+
+        // Inertia pages for Quotation module
+        Route::inertia('/', 'quotation/index')->name('quotation.dashboard');
+        Route::inertia('/products', 'quotation/products/index')->name('quotation.products');
+        Route::inertia('/quotations', 'quotation/quotations/index')->name('quotation.quotations');
+        Route::inertia('/reports/profit', 'quotation/reports/profit')->name('quotation.reports.profit');
+        Route::inertia('/settings', 'quotation/settings/index')->name('quotation.settings');
+
+        Route::get('quotations/{quotation}/export-pdf', [QuotationController::class, 'exportPdf'])->name('quotations.exportPdf');
+        Route::get('quotations/{quotation}/export-excel', [QuotationController::class, 'exportExcel'])->name('quotations.exportExcel');
+        Route::post('quotations/{quotation}/duplicate', [QuotationController::class, 'duplicate'])->name('quotations.duplicate');
+        Route::get('quotations/{quotation}/revisions', [QuotationController::class, 'revisions'])->name('quotations.revisions');
+    });
+
 });
 
 require __DIR__.'/settings.php';
-
-

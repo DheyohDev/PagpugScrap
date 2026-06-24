@@ -45,15 +45,21 @@ export default function Dashboard() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+            <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto rounded-xl p-4">
                 <h1 className="text-2xl font-bold">Dashboard</h1>
-                {loading ? (
-                    <p className="text-sm text-muted-foreground">Loading charts...</p>
-                ) : error ? (
-                    <p className="text-sm text-red-500">{error}</p>
-                ) : (
-                    <DataLeadsCharts data={aggregations} />
-                )}
+                
+                <div className="space-y-6">
+                    <div>
+                        <h2 className="text-lg font-semibold mb-4">Statistics</h2>
+                        {loading ? (
+                            <p className="text-sm text-muted-foreground">Loading charts...</p>
+                        ) : error ? (
+                            <p className="text-sm text-red-500">{error}</p>
+                        ) : (
+                            <DataLeadsCharts data={aggregations} />
+                        )}
+                    </div>
+                </div>
             </div>
         </AppLayout>
     );

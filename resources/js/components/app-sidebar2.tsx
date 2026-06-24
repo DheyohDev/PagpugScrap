@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, Globe, LayoutGrid, User } from 'lucide-react';
+import { BookOpen, FolderGit2, Globe, LayoutGrid, User, TrendingUp, Settings } from 'lucide-react';
+import { FileText, Box } from 'lucide-react';
 import AppLogo from './branding/app-logo';
 import { NavFooter } from './navigation/nav-footer';
 import { NavMain } from './navigation/nav-main';
@@ -25,14 +26,48 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
-    {   title: 'Scraping Jobs',
+    {
+        title: 'Scraping Jobs',
         href: '/scraping',
-        icon: Globe
+        icon: Globe,
     },
     {
         title: 'Profile',
         href: '/settings/profile',
         icon: User,
+    },
+ 
+    {
+        title: 'Quotation',
+        href: '/quotation',
+        icon: FolderGit2,
+        items: [
+            {
+                title: 'Overview',
+                href: '/quotation',
+                icon: FileText,
+            },
+            {
+                title: 'Quotations',
+                href: '/quotation/quotations',
+                icon: FileText,
+            },
+            {
+                title: 'Products',
+                href: '/quotation/products',
+                icon: Box,
+            },
+            {
+                title: 'Reports',
+                href: '/quotation/reports/profit',
+                icon: TrendingUp,
+            },
+            {
+                title: 'Settings',
+                href: '/quotation/settings',
+                icon: Settings,
+            },
+        ],
     },
 ];
 

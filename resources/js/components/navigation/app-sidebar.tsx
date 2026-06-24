@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Database, FolderGit2, Globe, LayoutGrid, Table2, User } from 'lucide-react';
+import { BookOpen, Database, FolderGit2, Globe, LayoutGrid, Table2, User, FileText, Box, TrendingUp, Settings } from 'lucide-react';
 import AppLogo from '@/components/branding/app-logo';
 import { NavFooter } from '@/components/navigation/nav-footer';
 import { NavMain } from '@/components/navigation/nav-main';
@@ -45,6 +45,39 @@ const mainNavItems: NavItem[] = [
                 icon: Database,
             },
         ]
+    },
+    {
+        title: 'Quotation',
+        href: '/quotation',
+        icon: FolderGit2,
+        isActive: true,
+        items: [
+            {
+                title: 'Overview',
+                href: '/quotation',
+                icon: FileText,
+            },
+            {
+                title: 'Quotations',
+                href: '/quotation/quotations',
+                icon: FileText,
+            },
+            {
+                title: 'Products',
+                href: '/quotation/products',
+                icon: Box,
+            },
+            {
+                title: 'Reports',
+                href: '/quotation/reports/profit',
+                icon: TrendingUp,
+            },
+            {
+                title: 'Settings',
+                href: '/quotation/settings',
+                icon: Settings,
+            },
+        ],
     },
     {
         title: 'Profile',
